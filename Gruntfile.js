@@ -25,6 +25,9 @@ module.exports = function(grunt) {
 		},		
 		
 		uglify: {
+			options: {
+		        banner: '/* <%= copy %> */\n',
+		      },
 			dist: {
 				files: {
 			    	'dist/all.js': 'dist/all.js'
@@ -32,11 +35,16 @@ module.exports = function(grunt) {
 			}
 		},
 		concat: {
+			options: {
+		        banner: '/* <%= copy %> */\n',
+		      },
 			dist: {
 				src: 'js/*.js',
 				dest: 'dist/all.js'
 			}
-		}
+		},
+
+		copy: 'Desenvolvido por Riderman em <%= grunt.template.today("yyyy-mm-dd") %>'
 
 	});
 
@@ -49,4 +57,17 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', ['coffee:dev', 'imagemin:dev'])
 	grunt.registerTask('dist', ['concat:dist', 'uglify:dist'])
+
+	// Custom task
+	grunt.registerTask('coffee', 'Log coffee compile.', function() {
+	  grunt.log.writeln('coffee:' + this.target + ' compiled!');
+	});
+
+	grunt.registerTask('custom', 'My custom task', function(arg1, arg2) {
+	  grunt.log.writeln('Seu código rodando aqui...');
+	  if (arg1)
+	  	grunt.log.writeln('Arg1: ' + arg1);
+	 if (arg2)
+	  	grunt.log.writeln('Arg2: ' + arg2);
+	});
 };
